@@ -40,7 +40,7 @@ nav ul{display:flex;gap:26px;list-style:none;margin:0;padding:0}nav ul a{color:#
 .is{background:var(--paper)}.is .lead,.is .cap{color:var(--muted)}
 .view{display:grid;grid-template-columns:minmax(300px,.78fr) minmax(0,1.22fr);gap:clamp(32px,5vw,88px);align-items:center;margin-top:48px}
 .stack{position:relative;display:grid;place-items:center;min-width:0}.stack img[hidden]{display:none}
-.stack img.ph:not([hidden]){width:auto;height:auto;max-width:100%;max-height:min(62vh,600px);max-height:min(62svh,600px);object-fit:contain}
+.stack img.ph:not([hidden]){width:auto;height:auto;max-width:100%;max-height:min(90vh,900px);max-height:min(90svh,900px);object-fit:contain}
 .opts{display:grid;gap:12px;min-height:0}
 .opt{text-align:left;border:0;cursor:pointer;background:var(--card);color:var(--ink);padding:18px 22px;border-radius:20px;box-shadow:inset 0 0 0 1.5px var(--line);font:inherit;transition:background .2s}
 .feature-pages{display:grid}
@@ -94,7 +94,7 @@ footer{padding:28px 0;color:var(--muted);font-size:.95rem}footer .w{display:flex
  nav .btn{white-space:nowrap;padding:10px 16px;font-size:.9rem}nav ul{display:none}.hero .w,.view,.wkg,.about,.why{grid-template-columns:1fr}
  .duo{height:470px;max-width:400px;margin:0 auto;width:100%}.duo img{width:215px}.duo .b{bottom:-70px}
  .wk .view.rev{grid-template-columns:1fr}.grp{margin-top:44px;padding-top:34px}
- .sec{padding:68px 0}.hero{padding-top:44px}.view{gap:24px}.wk .view.rev{grid-template-columns:1fr}.wk .view.rev .stack{order:0}.stack{max-width:min(100%,420px);margin:0 auto;width:100%}.stack img.ph:not([hidden]){max-height:min(68vh,600px);max-height:min(68svh,600px)}
+ .sec{padding:68px 0}.hero{padding-top:44px}.view{gap:24px}.wk .view.rev{grid-template-columns:1fr}.wk .view.rev .stack{order:0}.stack{max-width:min(100%,520px);margin:0 auto;width:100%}.stack img.ph:not([hidden]){max-height:min(90vh,900px);max-height:min(90svh,900px)}
 }
 
 /* realism + motion */
@@ -105,6 +105,10 @@ body::after{content:"";position:fixed;inset:0;z-index:50;pointer-events:none;opa
 .ctl{display:flex;gap:10px}.ctl button{width:50px;height:50px;border-radius:50%;border:0;cursor:pointer;background:var(--card);color:var(--ink);font-size:1.4rem;box-shadow:inset 0 0 0 1.5px var(--line),0 10px 24px -10px rgba(27,16,51,.35);transition:transform .15s}
 .ctl button:hover{transform:scale(1.08)}
 .track{display:flex;gap:22px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none;max-width:1140px;margin:0 auto;padding:36px 24px 48px;perspective:1000px}
+#tt.track{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));max-width:1680px;overflow:visible}
+#tt .tc{width:100%}
+#team .ctl{display:none}
+@media (max-width:1100px){#tt.track{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .track::-webkit-scrollbar{display:none}
 .nc,.tc{flex:none;scroll-snap-align:start;width:min(320px,80vw);border-radius:26px;position:relative;transition:transform .25s ease,box-shadow .25s}
 .nc{background:var(--card);padding:30px 26px 26px;display:flex;flex-direction:column;gap:12px;min-height:310px;overflow:hidden;box-shadow:inset 0 1px 0 #fff,0 2px 4px rgba(27,16,51,.06),0 22px 44px -16px rgba(27,16,51,.35)}
@@ -130,7 +134,7 @@ body::after{content:"";position:fixed;inset:0;z-index:50;pointer-events:none;opa
 .tc.open .pic{background:rgba(255,255,255,.06)}.tc.open .pic span{color:rgba(255,255,255,.5)}
 @keyframes shine{60%,100%{translate:100% 0}}
 @media (prefers-reduced-motion:reduce){.pic::after{animation:none}}
-@media (max-width:600px){#tt.track{gap:14px;padding:24px 16px 36px}.tc{width:min(280px,78vw)}.pic{aspect-ratio:1/1}.pic img{object-fit:contain;background:#1B1033}.tb{padding:18px 18px 20px}.tc h3{font-size:1.35rem}.tc small,.tc p{font-size:.92rem}.chips{gap:6px}.chips span{font-size:.75rem;padding:4px 10px}.feature-page,.wk .opts{grid-template-columns:repeat(2,minmax(0,1fr))}.feature-page .opt,.wk .opts .opt{padding:12px 14px}.feature-controls{flex-wrap:wrap}.feature-cta{flex-basis:100%;text-align:center}.view{gap:20px}.stack{max-width:min(100%,420px)}.stack img.ph:not([hidden]){max-height:min(68vh,600px);max-height:min(68svh,600px)}.feature-page h3{margin-bottom:2px}.feature-page .opt,.wk .opts .opt{align-self:stretch}.feature-page .opt span,.wk .opts .opt span{line-height:1.4}}
+@media (max-width:600px){#tt.track{grid-template-columns:minmax(0,1fr);gap:18px;max-width:640px;padding:24px 20px 36px}.tc{width:100%}.pic{aspect-ratio:4/3}.pic img{object-fit:contain;background:#1B1033}.tb{padding:18px 18px 20px}.tc h3{font-size:1.35rem}.tc small,.tc p{font-size:.92rem}.chips{gap:6px}.chips span{font-size:.75rem;padding:4px 10px}.feature-page,.wk .opts{grid-template-columns:repeat(2,minmax(0,1fr))}.feature-page .opt,.wk .opts .opt{padding:12px 14px}.feature-controls{flex-wrap:wrap}.feature-cta{flex-basis:100%;text-align:center}.view{gap:20px}.stack{max-width:min(100%,520px)}.stack img.ph:not([hidden]){width:100%;height:auto;max-height:none}.feature-page h3{margin-bottom:2px}.feature-page .opt,.wk .opts .opt{align-self:stretch}.feature-page .opt span,.wk .opts .opt span{line-height:1.4}}
 .stack{container-type:inline-size}
 .gm{position:absolute;left:4.8%;top:23.6%;width:90.4%;height:40.2%;border-radius:4.6cqw;overflow:hidden;background:#e8eef6;--u:calc(100cqw/585)}
 .gm[hidden]{display:none}.gm iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
@@ -248,7 +252,7 @@ body::after{content:"";position:fixed;inset:0;z-index:50;pointer-events:none;opa
  <p class="cap">Screens are from our apps in development, shown with sample data.</p>
 </div></section>
 
-<section class="sec tm" id="team"><div class="w hd"><div><span class="tag">Team</span><h2>The people behind Tensus.</h2><p class="lead">Swipe through the team and what each person builds.</p></div><div class="ctl"><button type="button" data-t="tt" data-d="-1" aria-label="Previous">&#8249;</button><button type="button" data-t="tt" data-d="1" aria-label="Next">&#8250;</button></div></div><div class="track pre" id="tt"></div></section>
+<section class="sec tm" id="team"><div class="w hd"><div><span class="tag">Team</span><h2>The people behind Tensus.</h2><p class="lead">Meet the team and what each person builds.</p></div><div class="ctl"><button type="button" data-t="tt" data-d="-1" aria-label="Previous">&#8249;</button><button type="button" data-t="tt" data-d="1" aria-label="Next">&#8250;</button></div></div><div class="track pre" id="tt"></div></section>
 
 <section class="sec" id="company"><div class="w">
  <h2>Built by a small team, end to end.</h2>
