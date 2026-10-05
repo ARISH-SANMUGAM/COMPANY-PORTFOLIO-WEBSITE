@@ -40,8 +40,24 @@ nav ul{display:flex;gap:26px;list-style:none;margin:0;padding:0}nav ul a{color:#
 .is{background:var(--paper)}.is .lead,.is .cap{color:var(--muted)}
 .view{display:grid;grid-template-columns:300px 1fr;gap:56px;align-items:center;margin-top:48px}
 .stack{position:relative}.stack img[hidden]{display:none}
-.opts{display:grid;gap:12px}
+.opts{display:grid;gap:12px;min-height:0}
 .opt{text-align:left;border:0;cursor:pointer;background:var(--card);color:var(--ink);padding:18px 22px;border-radius:20px;box-shadow:inset 0 0 0 1.5px var(--line);font:inherit;transition:background .2s}
+.feature-pages{display:grid}
+.feature-page{display:none;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.feature-page.active{display:grid}
+.feature-page .opt{display:block;padding:14px 16px}
+.feature-page .opt span{display:block}
+.feature-page .opt[aria-pressed=true]{background:var(--grad);color:#fff;box-shadow:none}
+.feature-page .opt[aria-pressed=true] span{color:#FFEAF5}
+.feature-controls{display:flex;align-items:center;gap:12px;margin-top:14px}
+.feature-controls button{width:42px;height:42px;border:0;border-radius:50%;background:var(--card);color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--line);font-size:1.35rem;cursor:pointer}
+.feature-count{font-size:.9rem;color:var(--muted);min-width:3.5em;text-align:center}
+.feature-cta{margin-top:18px}
+.stack img:not([hidden]){animation:feature-in .35s ease both}
+.wk .opts{grid-template-columns:repeat(2,minmax(0,1fr))}
+.wk .opts .opt{display:block;padding:14px 16px}
+.wk .grp[hidden]{display:none}
+@keyframes feature-in{from{opacity:.55;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 .opt b{display:block;font:800 1.15rem var(--d)}.opt span{color:var(--muted);font-size:.98rem}
 .opt[aria-selected=true]{background:var(--grad);box-shadow:none;color:#fff}.opt[aria-selected=true] span{color:#FFEAF5}
 .cap{font-size:.92rem;margin-top:14px}
@@ -56,6 +72,9 @@ nav ul{display:flex;gap:26px;list-style:none;margin:0;padding:0}nav ul a{color:#
 .wk .opt{background:rgba(255,255,255,.08);box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.22);color:#fff}.wk .opt span{color:#BCCBEE}
 .wk .opt:hover{background:rgba(255,255,255,.14)}
 .wk .opt[aria-selected=true]{background:#fff;box-shadow:none;color:#071B3A}.wk .opt[aria-selected=true] b{color:#1A3FD4}.wk .opt[aria-selected=true] span{color:#3A4A6B}
+.wk .feature-controls button{background:rgba(255,255,255,.12);color:#fff;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.3)}
+.wk .feature-count{color:#C9D6F5}
+.wk .feature-cta.ghost{color:#fff;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.6)}
 .wk .cap{color:#BCCBEE;margin-top:44px}
 .why{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:44px}
 .why div{padding:30px;border-radius:24px;color:#fff}.why p{margin-top:10px;font-size:1rem}
@@ -107,7 +126,7 @@ body::after{content:"";position:fixed;inset:0;z-index:50;pointer-events:none;opa
 .tc.open .pic{background:rgba(255,255,255,.06)}.tc.open .pic span{color:rgba(255,255,255,.5)}
 @keyframes shine{60%,100%{translate:100% 0}}
 @media (prefers-reduced-motion:reduce){.pic::after{animation:none}}
-@media (max-width:600px){#tt.track{gap:14px;padding:24px 16px 36px}.tc{width:min(280px,78vw)}.pic{aspect-ratio:1/1}.pic img{object-fit:contain;background:#1B1033}.tb{padding:18px 18px 20px}.tc h3{font-size:1.35rem}.tc small,.tc p{font-size:.92rem}.chips{gap:6px}.chips span{font-size:.75rem;padding:4px 10px}}
+@media (max-width:600px){#tt.track{gap:14px;padding:24px 16px 36px}.tc{width:min(280px,78vw)}.pic{aspect-ratio:1/1}.pic img{object-fit:contain;background:#1B1033}.tb{padding:18px 18px 20px}.tc h3{font-size:1.35rem}.tc small,.tc p{font-size:.92rem}.chips{gap:6px}.chips span{font-size:.75rem;padding:4px 10px}.feature-page,.wk .opts{grid-template-columns:repeat(2,minmax(0,1fr))}.feature-page .opt,.wk .opts .opt{padding:12px 14px}.feature-controls{flex-wrap:wrap}.feature-cta{flex-basis:100%;text-align:center}}
 .stack{container-type:inline-size}
 .gm{position:absolute;left:4.8%;top:23.6%;width:90.4%;height:40.2%;border-radius:4.6cqw;overflow:hidden;background:#e8eef6;--u:calc(100cqw/585)}
 .gm[hidden]{display:none}.gm iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
@@ -243,24 +262,54 @@ body::after{content:"";position:fixed;inset:0;z-index:50;pointer-events:none;opa
 
 <section class="cta" id="contact"><div class="w">
  <h2>Be first in line when we launch.</h2>
- <p class="lead">Tell us who you are and we'll email you when your app opens.</p>
- <form id="f"><input type="email" id="em" placeholder="Your email" required aria-label="Your email">
- <select id="who" aria-label="I am a"><option>Seller (InstaSell)</option><option>Buyer (InstaSell)</option><option>Job seeker (Woorker)</option><option>Employer (Woorker)</option><option>Investor or partner</option></select>
- <button class="btn" type="submit">Send my details</button></form>
- <p id="msg" role="status"></p>
+ <p class="lead">Sign up for launch updates using our Google Form. Responses can be linked to a Google Sheet.</p>
+ <a class="btn" id="launch-form-link" href="#contact">Open launch sign-up form</a>
+ <p id="msg" role="status">The Google Form isn’t connected yet. Add its public URL in the page script to collect sign-ups.</p>
 </div></section>
 <footer><div class="w"><span>© 2026 Tensus Technologies</span><span>Tamil Nadu, India</span></div></footer>
 
 <script>
-var CONTACT_EMAIL="hello@tensustechnologies.com"; // replace with your real email
-document.querySelectorAll(".view").forEach(function(v){var o=v.querySelectorAll(".opt"),m=v.querySelectorAll(".stack img");
- o.forEach(function(b,i){b.addEventListener("click",function(){
-  o.forEach(function(x){x.setAttribute("aria-selected",x===b)});
-  m.forEach(function(p){p.hidden=(+p.dataset.i!==i)});});});});
-document.getElementById("f").addEventListener("submit",function(e){e.preventDefault();
- var em=document.getElementById("em").value,w=document.getElementById("who").value;
- location.href="mailto:"+CONTACT_EMAIL+"?subject="+encodeURIComponent("Launch updates: "+w)+"&body="+encodeURIComponent("Please add me to the launch list.\nEmail: "+em+"\nI am: "+w);
- document.getElementById("msg").textContent="Your email app should open with the message ready to send.";});
+var LAUNCH_FORM_URL="";
+var reducedMotion=matchMedia("(prefers-reduced-motion:reduce)").matches;
+function addDeckControls(parent,label,pageCount,onChange){
+ var controls=document.createElement("div");controls.className="feature-controls";
+ controls.innerHTML='<button type="button" data-step="-1" aria-label="Previous '+label+'">&#8249;</button><span class="feature-count" aria-live="polite"></span><button type="button" data-step="1" aria-label="Next '+label+'">&#8250;</button>';
+ parent.appendChild(controls);
+ var count=controls.querySelector(".feature-count");
+ controls.querySelectorAll("button").forEach(function(button){button.addEventListener("click",function(){onChange((+count.dataset.page+(+button.dataset.step)+pageCount)%pageCount)})});
+ return {element:controls,setPage:function(page){count.dataset.page=page;count.textContent=(page+1)+" / "+pageCount}};
+}
+document.addEventListener("click",function(e){var link=e.target.closest&&e.target.closest('a[href="#contact"]');if(!link||!LAUNCH_FORM_URL)return;if(!/^https:\/\/docs\.google\.com\/forms\//i.test(LAUNCH_FORM_URL)){document.getElementById("msg").textContent="The launch sign-up link must be a valid Google Forms URL.";return}e.preventDefault();location.assign(LAUNCH_FORM_URL)});
+var insta=document.querySelector("#instasell .view"),instaOpts=insta.querySelector(".opts"),instaButtons=Array.from(instaOpts.querySelectorAll(".opt")),instaImages=Array.from(insta.querySelectorAll(".stack img"));
+var instaPages=[{title:"Shop and buy",range:[0,3]},{title:"Seller tools",range:[3,6]}],instaIndex=0,instaShot=0,instaPaused=false;
+var instaPagesHost=document.createElement("div");instaPagesHost.className="feature-pages";
+instaOpts.parentNode.insertBefore(instaPagesHost,instaOpts);instaOpts.hidden=true;
+instaPages.forEach(function(config,pageIndex){
+ var page=document.createElement("div");page.className="feature-page";page.setAttribute("role","group");page.setAttribute("aria-label",config.title);
+ var heading=document.createElement("h3");heading.textContent=config.title;heading.style.gridColumn="1 / -1";page.appendChild(heading);
+ for(var buttonIndex=config.range[0];buttonIndex<config.range[1];buttonIndex++){var button=instaButtons[buttonIndex];button.removeAttribute("role");button.removeAttribute("aria-selected");button.setAttribute("aria-pressed","false");page.appendChild(button);button.addEventListener("click",function(index,group){return function(){showInstaShot(group,index-instaPages[group].range[0])}}(buttonIndex,pageIndex))}
+ instaPagesHost.appendChild(page);
+});
+var instaControls=addDeckControls(instaOpts.parentNode,"InstaSell page",instaPages.length,function(page){showInstaPage(page)});
+var instaCta=document.createElement("a");instaCta.className="btn feature-cta";instaCta.href="#contact";instaCta.textContent="Get launch updates";instaControls.element.appendChild(instaCta);
+function showInstaShot(page,shot){var config=instaPages[page],length=config.range[1]-config.range[0];instaShot=(shot+length)%length;var selected=config.range[0]+instaShot;instaImages.forEach(function(image,i){image.hidden=i!==selected});instaButtons.forEach(function(button,i){button.setAttribute("aria-pressed",i===selected?"true":"false")})}
+function showInstaPage(page){instaIndex=(page+instaPages.length)%instaPages.length;instaPagesHost.querySelectorAll(".feature-page").forEach(function(el,i){el.classList.toggle("active",i===instaIndex);el.hidden=i!==instaIndex});instaControls.setPage(instaIndex);showInstaShot(instaIndex,0)}
+showInstaPage(0);
+insta.addEventListener("pointerenter",function(){instaPaused=true});insta.addEventListener("pointerleave",function(){instaPaused=false});insta.addEventListener("focusin",function(){instaPaused=true});insta.addEventListener("focusout",function(e){if(!insta.contains(e.relatedTarget))instaPaused=false});
+var woorker=document.querySelector("#woorker .w"),workGroups=Array.from(woorker.querySelectorAll(".grp")),workIndex=0,workShot=0,workPaused=false;
+var workControls=addDeckControls(woorker,"Woorker page",workGroups.length,function(page){showWorkPage(page)});woorker.insertBefore(workControls.element,workGroups[0]);
+var workCta=document.createElement("a");workCta.className="btn ghost feature-cta";workCta.href="#contact";workCta.textContent="Get launch updates";workControls.element.appendChild(workCta);
+function showWorkShot(groupIndex,shot){var group=workGroups[groupIndex],images=Array.from(group.querySelectorAll(".stack img")),buttons=Array.from(group.querySelectorAll(".opt"));if(!images.length)return;workShot=(shot+images.length)%images.length;images.forEach(function(image,i){image.hidden=i!==workShot});buttons.forEach(function(button,i){button.setAttribute("aria-selected",i===workShot?"true":"false")})}
+function showWorkPage(page){workIndex=(page+workGroups.length)%workGroups.length;workGroups.forEach(function(group,i){group.hidden=i!==workIndex});workControls.setPage(workIndex);showWorkShot(workIndex,0)}
+workGroups.forEach(function(group,groupIndex){var buttons=Array.from(group.querySelectorAll(".opt"));buttons.forEach(function(button,index){button.addEventListener("click",function(){showWorkShot(groupIndex,index)})})});
+showWorkPage(0);
+var workSection=document.getElementById("woorker");workSection.addEventListener("pointerenter",function(){workPaused=true});workSection.addEventListener("pointerleave",function(){workPaused=false});workSection.addEventListener("focusin",function(){workPaused=true});workSection.addEventListener("focusout",function(e){if(!workSection.contains(e.relatedTarget))workPaused=false});
+if(!reducedMotion){
+ setInterval(function(){if(!instaPaused&&document.visibilityState==="visible")showInstaPage(instaIndex+1)},7500);
+ setInterval(function(){if(!instaPaused&&document.visibilityState==="visible")showInstaShot(instaIndex,instaShot+1)},2500);
+ setInterval(function(){if(!workPaused&&document.visibilityState==="visible")showWorkPage(workIndex+1)},8000);
+ setInterval(function(){if(!workPaused&&document.visibilityState==="visible")showWorkShot(workIndex,workShot+1)},2600);
+}
 
 var NEWS=[["InstaSell","Meet InstaSell","A store page and order tracker for people who sell on Instagram and WhatsApp.","#6D28D9"],["Woorker","Woorker, from both sides","Job seekers and employers each get a view built for them.","#1F5EEA"],["Payments","Fees you can see","Fees, payments and payouts are shown upfront for everyone involved.","#E11D74"],["Our story","Built in Tamil Nadu","A small team building the apps, backend, payments and admin tools itself.","#E26A12"]];
 var TEAM=[{n:"ARISH S",r:"Founder",w:"Team leadership",d:"Leads Tensus and manages the team, overseeing the apps, backend, payments and admin tools.",p:["Team leadership","InstaSell","Woorker","Backend","Payments","Admin tools"],img:"ARISH_COLOUR.jpeg"},{n:"DHARSHAN R",r:"Technical Lead",w:"AI & all technical work",d:"Leads technical development across Tensus, including AI.",p:["AI","Technical development","Engineering"],img:"dharshan-r.png"},{n:"JEEVA MP",r:"Cybersecurity & Testing",w:"Security and quality assurance",d:"Handles cybersecurity and testing across Tensus products.",p:["Cybersecurity","Testing","Quality assurance"],img:"jeeva-mp.png"},{n:"MADHAN KUMAR M",r:"Groundwork, Research & Coordination",w:"Research and team coordination",d:"Handles groundwork, research and coordination for Tensus.",p:["Groundwork","Research","Coordination"]},{n:"SATHISH S",r:"Finance Lead",w:"Finance-related functions",d:"Handles finance-related functions across Tensus.",p:["Finance","Financial operations"],img:"sathish-s.png"}];
